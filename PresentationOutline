@@ -1,0 +1,30 @@
+    Controllers
+      If you can, regenerate your controllers with the new Resourceful Controllers.
+
+      All controllers are restful by default, so you won’t need to include $this->restful = true any more
+
+      return Response::error(‘404’) becomes return App::abort(404)
+
+      If you're hard-headed like me then don't forget to fix your snake_case
+      ex: 'get_index' to 'getIndex'
+
+      When Routing to these Controller Methods in L4
+      You have to specify the get in the Route Declaration
+      Ex: Route::get('/', 'HomeController@getIndex'); rather than Route::get('/', 'HomeController@index');
+
+    Routing
+      More Control with Controller Routing
+        When issuing a route controller you now specify the uri and then the controller name, yay for more control!
+
+        Route::controller('user', 'UserController');
+
+      Routes now use {varname} syntax rather than (:type) syntax
+      You also set your restrictions after with a method chain.
+      Route::get('user/{id}', function($id)
+      {
+
+      })->where('id', '\d+'); <--- for numbers
+      You can also set defaults 'yay!'
+      ->defaults('page', 1);
+
+      Be sure to convert something like get_update_merchant_account to getUpdateMerchantAccount and change the uri from update_merchant_account to update-merchant-account.

@@ -1,0 +1,446 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<title>Shower Presentation Engine</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=792, user-scalable=no">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<link rel="stylesheet" href="bootstrap.css">
+	<link rel="stylesheet" href="shower/themes/ribbon/styles/screen.css">
+	<link rel="stylesheet" href="shower/themes/ribbon/styles/presentStyles.css">
+</head>
+<body class="list">
+	<header class="caption">
+		<h1>Migrating Laravel: <span>L3 to L4</span></h1>
+		<p>Brandon Boswell, Cont3nt.com</p>
+	</header>
+	<section class="slide cover" id="Cover"><div>
+		<h2>Migrating Laravel: <span>L3 to L4</span></h2>
+
+		<p><a href="http://brandonkboswell.com">Brandon Boswell</a>, <a href="http://twitter.com/brandonkboswell">@brandonkboswell</a></p>
+		<img src="pictures/cover.jpg" alt="">
+		<p class="credit">Photo By: Pjan Vandaele</p>
+		<!--
+			To apply styles to the certain slides
+			set slide ID to get needed elements
+			-->
+		<style>
+			.credit {
+				position:absolute;
+				bottom: 5px;
+				right: 15px;
+				color: rgba(250,250,250,.75) !important;
+				font-size: 15px !important;
+			}
+			.slide.shout h2.hasCode {
+			}
+
+			.fail {
+				color: red !important;
+			}
+
+			.success {
+				color: green !important;
+			}
+
+			.normal {
+				font-weight: normal !important;
+			}
+			.hasCode pre code {
+				color: white;
+				font-size: 45px;
+			}
+			.slide a {
+				border-bottom: none;
+			}
+			.blue {
+				background-color: #222f3c;
+			}
+			.white {
+				background-color: #fff !important;
+			}
+			.blue h2 {
+				color: #b3b3b3;
+			}
+			.green {
+				background-color: #487569;
+			}
+			.green h2 {
+				color: #29423c;
+			}
+			.gold {
+				background-color: #d79d3b;
+			}
+			.gold h2 {
+				color: #664b1c;
+			}
+			.tan {
+				background-color: #fff3b8;
+			}
+			.tan h2 {
+				color: #666149;
+			}
+			.olive {
+				background-color: #8a9781;
+			}
+			.olive h2 {
+				color: #434a3f;
+			}
+			#Cover h2 {
+				margin:30px 0 0;
+				color:#FFF;
+				text-align:left;
+				font-size:70px;
+				}
+			#Cover p {
+				margin:10px 0 0;
+				text-align:left;
+				color:#FFF;
+				font-style:italic;
+				font-size:20px;
+				}
+				#Cover p a {
+					color:#FFF;
+				}
+
+				#Cover h2 {
+					text-shadow: 3px 3px rgba(0,0,0,.5);
+				}
+
+				#Cover p {
+					text-shadow: 1px 2px rgba(0,0,0,.5);
+				}
+				.migrate h2
+				{
+					font-weight: normal !important;
+				}
+				#Whoops h2 {
+					color: #FFF;
+					position: absolute;
+					bottom: 0;
+					right: 25px;
+				}
+				.cover img {
+					width: 100%;
+				}
+				.long h2 {
+					font-size: 115px !important;
+				}
+				.long h2 span{
+					font-size: 65px !important;
+				}
+				#Job h2 {
+					top: 37% !important;
+				}
+		</style>
+	</div></section>
+	<section class="slide shout blue"><div>
+		<h2>Who Am I?</h2>
+	</div></section>
+	<section class="slide cover shout white" id="Job"><div>
+		<img src="pictures/logo.png" alt="">
+		<h2 class="btn-success">Code Conqueror<br> @ </h2>
+	</div></section>
+	<section class="slide shout green"><div>
+		<h2>Before We Start</h2>
+	</div></section>
+	<section class="slide shout gold"><div>
+		<h2>Do Your Homework</h2>
+	</div></section>
+	<section class="slide shout migrate olive"><div>
+		<h2>Do I Really Need To <strong>Migrate</strong>?</h2>
+	</div></section>
+	<section class="slide shout long blue"><div>
+		<h2>How Long Did It Take?<br><br>
+			<span>One Week From Start to Production</span><br>
+			<span><em>(About 50 Hours, 14k Lines of Code)</em></span>
+		</h2>
+	</div></section>
+	<section class="slide shout gold"><div>
+		<h2>Lets Get Started</h2>
+	</div></section>
+	<section class="slide shout blue"><div>
+		<h2 class="hasCode">Start A New Repo
+			<br>
+			<br>
+			<pre>
+				<code>git init</code>
+			</pre>
+		</h2>
+	</div></section>
+	<section class="slide olive"><div>
+		<h2 class="hasCode">Start Copying Files</pre>
+		</h2>
+		<ol>
+			<li>Dev Tools (Guard)</li>
+			<li>Setup Your Configs</li>
+			<li>Views (Not That Much Has Changed)</li>
+			<li>Routes</li>
+			<li>Controllers</li>
+			<li>Copy the Contents of your Public Folder <em>(Not index.php)</em></li>
+		</ol>
+	</div></section>
+	<section class="slide cover" id="Whoops"><div>
+		<img src="pictures/whoops.png" alt="">
+	</div></section>
+	<section class="slide shout tan"><div>
+		<h2>There Are Going To Be A Lot Of Errors...</h2>
+	</div></section>
+	<section class="slide shout green"><div>
+		<h2>How To Speed Up The Process?</h2>
+	</div></section>
+	<section class="slide olive"><div>
+		<h2>Find / Replace The Snakecase to Camelcase</h2>
+		<ul>
+	    <li><strong>has_many</strong> => <strong>hasMany</strong></li>
+	    <li><strong>order_by</strong> => <strong>orderBy</strong></li>
+	    <li><strong>left_join</strong> => <strong>leftJoin</strong></li>
+	    <li><strong>Any queries that start with where_</strong></li>
+		<ul>
+			<br>
+	    The final article will have a list to help you start your migration.
+	</div></section>
+	<section class="slide tan"><div>
+		<h2>Find / Replace Any Syntax Changes <br>As You Come To Them</h2>
+		<pre>
+			<li><strong>has_many_and_belongs_to</strong> => <strong>belongsToMany</strong></li>
+	    <li><strong>Response::error(500, 'msg')</strong> => <strong>App::abort(500, 'msg')</strong></li>
+	    <li><strong>Auth::login($id)</strong> => <strong>Auth::loginUsingId($id)</strong></li>
+		<pre>
+			<br>
+	    The final article will have a list to help you start your migration.
+	</div></section>
+<!-- 	<section class="slide"><div>
+		<h2>Plain Text on Your Slides</h2>
+		<p>Lorem ipsum dolor sit amet, consectetur <a href="#4">adipisicing</a> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, <em>quis nostrud</em> exercitation ullamco laboris <strong>nisi ut aliquip</strong> ex ea commodo consequat. Duis aute irure <i>dolor</i> in reprehenderit in voluptate velit esse cillum <b>dolore</b> eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in <code>&lt;culpa&gt;</code> qui officia deserunt mollit anim id est laborum.</p>
+	</div></section>
+	<section class="slide"><div>
+		<h2>All Kind of Lists</h2>
+		<ol>
+			<li>Simple lists are marked with bullets</li>
+			<li>Ordered lists begin with a number</li>
+			<li>You can even nest lists one inside another
+				<ul>
+					<li>Or mix their types</li>
+					<li>But do not go too far</li>
+					<li>Otherwise audience will be bored</li>
+				</ul>
+			</li>
+			<li>Look, seven rows exactly!</li>
+		</ol>
+	</div></section> -->
+<!-- 	<section class="slide"><div>
+		<h2>Serious Citations</h2>
+		<figure>
+			<blockquote>
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</p>
+			</blockquote>
+			<figcaption>Marcus Tullius Cicero</figcaption>
+		</figure>
+	</div></section> -->
+<!-- 	<section class="slide"><div>
+		<h2>Code Samples</h2>
+		<pre>
+			<code>&lt;!DOCTYPE html&gt;</code>
+			<code>&lt;html lang="en"&gt;</code>
+			<code><mark>&lt;head&gt;</mark> <mark class="comment">&lt;!--Comment--&gt;</mark></code>
+			<code>    &lt;title&gt;Shower&lt;/title&gt;</code>
+			<code>    &lt;meta charset="<mark class="important">UTF-8</mark>"&gt;</code>
+			<code>    &lt;link rel="stylesheet" href="screen.css"&gt;</code>
+			<code><mark>&lt;/head&gt;</mark></code>
+		</pre>
+	</div></section> -->
+	<section class="slide shout gold"><div>
+		<h2>Big Changes</h2>
+	</div></section>
+	<section class="slide cover shout olive" id="Bundles"><div>
+		<h2 class="label btn-success">No More Bundles</h2>
+		<img src="pictures/bundles.png" alt="">
+	</div></section>
+	<section class="slide cover" id="Packagist"><div>
+		<img src="pictures/packagist.jpg" alt="">
+	</div></section>
+	<section class="slide shout tan"><div>
+		<h2>Eloquent</h2>
+	</div></section>
+	<section class="slide tan"><div>
+		<h2>Collections</h2>
+		<p>L4 now returns a collection object rather than an array after a query.</p>
+		<pre>
+			<code class="fail">$users = User::get();</code>
+			<code class="fail"> </code>
+			<code class="fail">if($users){</code>
+			<code class="fail">	//do something</code>
+			<code class="fail">}</code>
+		</pre>
+	</div></section>
+	<section class="slide tan"><div>
+		<h2>Collections</h2>
+		<p>L4 now returns a collection object rather than an array after a query.</p>
+		<pre>
+			<code class="success">$users = User::get();</code>
+			<code class="success"> </code>
+			<code class="success">if(!$users->isEmpty()){</code>
+			<code class="success">	//do something</code>
+			<code class="success">}</code>
+		</pre>
+	</div></section>
+	<section class="slide tan"><div>
+		<h2>Collections</h2>
+		<p>L4 collections are not array. <strong>is_array</strong>, <strong>array_map</strong>, <strong>array_filter</strong> will all fail.</p>
+		<pre>
+			<code class="fail">$p = $purchases->where_story_id($id)->get();</code>
+			<code> </code>
+			<code class="fail">//Grab the Last Purchase of This Story</code>
+			<code class="fail">$purchase = end($p);</code>
+		</pre>
+	</div></section>
+	<section class="slide tan"><div>
+		<h2>Collections</h2>
+		<p>L4 collections are not array. <strong>is_array</strong>, <strong>array_map</strong>, <strong>array_filter</strong> will all fail.</p>
+		<pre>
+			<code class="success">$p = $purchases->whereStoryId($id)->get();</code>
+			<code> </code>
+			<code class="success">//Grab the Last Purchase of This Story</code>
+			<code class="success">$purchase = $purchases->last();</code>
+		</pre>
+	</div></section>
+	<section class="slide shout gold"><div>
+		<h2>Controllers</h2>
+	</div></section>
+	<section class="slide gold"><div>
+		<h2>Controllers</h2>
+		<p>Regenerate your controllers with the new Resource Controllers.</p>
+		<pre>
+			<code class="">php artisan controller:make StoryController</code>
+		</pre>
+	</div></section>
+	<section class="slide gold"><div>
+		<h2>Controllers</h2>
+		<p>If you don't use Resourceful Controllers...<br>When Routing to these Controller Methods in L4</p>
+		<pre>
+			<code class="fail">Route::get('/', 'HomeController@index');</code>
+			<code class="success">Route::get('/', 'HomeController@getIndex');</code>
+		</pre>
+	</div></section>
+	<section class="slide shout"><div>
+		<h2>Routing</h2>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Routing</h2>
+		<p>You can now specify the URI for Controller Routes. Yay for more control!</p>
+		<pre>
+			<code class="">Route::controller('user', 'UserController');</code>
+			<code class="">Route::controller('group', 'UserController');</code>
+		</pre>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Routing</h2>
+		<p>Routes now use {varname} syntax rather than (:type) syntax <br>
+		You also now set your restrictions after with a method chain.<p>
+		<pre>
+			<code>Route::get('user/{id}', function($id)</code>
+			<code>{</code>
+			<code>	//Do Something</code>
+			<code>})->where('id', '\d+'); // Limit To Numbers!</code>
+			<code>->defaults('page', 1); // Defaults!</code>
+		</pre>
+	</div></section>
+	<section class="slide olive"><div>
+		<h2>No More Asset Manager</h2>
+		<br>
+		<ul>
+	    <li><strong>Switch To Basset <em><span class="normal" href="https://github.com/jasonlewis/basset">https://github.com/jasonlewis/basset</span></em></strong></li>
+	    <br>
+	    <p>or </p>
+	    <li><strong>HTML::style('url')</strong> && <strong>HTML::script('url')</strong></li>
+		<ul>
+	</div></section>
+	<section class="slide tan"><div>
+		<h2>Getters aka Accessors</h2>
+		<pre>
+			<code>public function get_points() {</code>
+			<code>	$point = $this->get_attribute('points');</code>
+			<code>	return $points > 0 ? $points : 0;</code>
+			<code>}</code>
+		</pre>
+		<pre>
+			<code>public function getPointsAttribute($value) {</code>
+			<code>	return $value > 0 ? $value : 0;</code>
+			<code>}</code>
+		</pre>
+	</div></section>
+	<section class="slide tan"><div>
+		<h2>Setters aka Mutators</h2>
+		<p>Setters also got the same treatment, except...<p>
+			<ul>
+				<li class="fail">$this->set_attributes('keyname', 'value'); //L3</li>
+				<li class="success">$this->attributes['keyname'] = $value;  //L4</li>
+			</ul>
+	</div></section>
+	<section class="slide gold"><div>
+		<h2>Logging</h2>
+		<p>Now uses Monolog under the hood. Log::write() should now be either: <br>
+				<pre>
+					<code class="success">Log::info();</code>
+					<code class="fail">Log::error();</code>
+					<code>Log::warning();</code>
+				</pre>
+	</div></section>
+	<section class="slide shout blue"><div>
+		<h2>Gotchas</h2>
+	</div></section>
+	<section class="slide tan"><div>
+		<h2>Be Sure To Close Blade Comments</h2>
+		<br>
+		<pre>
+			<code class="fail">{{-- This Is A Blade Comment that will work in L3</code>
+			<code class="success">{{-- This Is A Blade Comment that will work in L4 --}}</code>
+		</pre>
+		<p>If you don't have the closing Comment Tag in L4, <br> It will now fail silently and output nothing.</p>
+	</div></section>
+	<section class="slide tan"><div>
+		<h2>No More Mimes Support</h2>
+		<p>The old Mime support of File::mime() is no longer there, so I created a package that wraps the old L3 functionality.</p>
+		<pre>
+			<code>Copy the old L3 mimes.php Config File to your L4 Project</code>
+			<code>L3\File::mime($extension)</code>
+		</pre>
+	</div></section>
+	<section class="slide tan"><div>
+		<h2>URL Helper Changes</h2>
+		<ul>
+			<li><strong>URL::base()</strong> => <strong>URL::to('/')</strong></li>
+			<li><strong>URL::to_asset()</strong> => <strong>URL::asset()</strong></li>
+			<li><strong>URL::to_route()</strong> => <strong>URL::route()</strong></li>
+			<li><strong>URL::to_action()</strong> => <strong>URL::action()</strong></li>
+			<li><strong>path()</strong> => <strong>base_path()</strong></li>
+			<li><strong>path('storage')</strong> => <strong>storage_path()</strong></li>
+			<li><strong>path('app')</strong> => <strong>app_path()</strong></li>
+			<li><strong>url() no longer includes the trailing slash</strong></li>
+		</ul>
+	</div></section>
+	<section class="slide tan"><div>
+		<h2>Auth</h2>
+		<p>
+      If you used a custom Auth Driver in L3 it is a bit different in L4.</p>
+      <p>Check Out: <strong>toddish.co.uk/blog/creating-a-custom-laravel-4-auth-driver/</strong></p>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Resources</h2>
+		<ol>
+		  <li><strong>Watch the Userscape Screencasts</strong><br> https://vimeo.com/userscape</li>
+		  <li><strong>Watch Jeffrey Way's Screencasts</strong><br> https://tutsplus.com/course/whats-new-in-laravel-4/</li>
+		  <li><strong>Jason Lewis: Illuminating Your L3 Apps</strong><br> jasonlewis.me/article/laravel-4-illuminating-your-laravel-3-applications</li>
+		  <li><strong>Additional List of Method Name Changes</strong> (Not Very Complete)<br> http://wiki.laravel.io/Changelog_(Laravel_4)</li>
+		</ol>
+	</div></section>
+	<!--
+		To hide progress bar from entire presentation
+		just remove “progress” element.
+		-->
+	<div class="progress"><div></div></div>
+	<script src="shower/shower.min.js"></script>
+	<!-- Copyright © 2013 Brandon Boswell -->
+</body>
+</html>
